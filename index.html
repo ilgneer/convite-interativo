@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>#IsadoraFaz15🎉</title>
+
+    <!-- Meta Tags para Pré-visualização no WhatsApp -->
+    <meta property="og:title" content="#IsadoraFaz15🎉" />
+    <meta
+      property="og:description"
+      content="Venha celebrar comigo essa data tão especial!"
+    />
+    <meta
+      property="og:image"
+      content="https://i.ibb.co/LDm29ShT/android-chrome-512x512.png"
+    />
+    <meta
+      name="image"
+      content="https://i.ibb.co/LDm29ShT/android-chrome-512x512.png"
+    />
+    <meta property="og:url" content="https://isadora15anos.vercel.app/?v=7" />
+    <meta property="og:type" content="website" />
+
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f7f7f7;
+        margin: 0;
+        overflow: hidden;
+      }
+      .container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+      }
+      .envelope,
+      .convite,
+      .lista-presentes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+        transition: opacity 0.5s ease-in-out;
+      }
+      .convite,
+      .lista-presentes {
+        opacity: 0;
+        pointer-events: none;
+        z-index: 0; /* Fica atrás do envelope */
+        outline: none; /* Remove o contorno azul ao clicar */
+        user-select: none; /* Impede a seleção de texto ou imagem */
+        -webkit-tap-highlight-color: transparent; /* Remove o destaque em dispositivos móveis */
+      }
+      .convite.mostrar,
+      .lista-presentes.mostrar {
+        opacity: 1;
+        pointer-events: auto;
+        z-index: 1; /* Coloca a imagem acima do envelope */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Envelope -->
+      <img src="1.png" alt="Envelope" class="envelope" id="envelope" />
+
+      <!-- Convite -->
+      <img src="2.png" alt="Convite" class="convite" id="convite" />
+
+      <!-- Lista de Presentes -->
+      <img
+        src="3.png"
+        alt="Lista de Presentes"
+        class="lista-presentes"
+        id="lista-presentes"
+      />
+    </div>
+
+    <script>
+      // Função para fazer a transição do envelope para o convite
+      document
+        .getElementById('envelope')
+        .addEventListener('click', function () {
+          this.style.opacity = '0'
+          setTimeout(() => {
+            this.style.display = 'none'
+            const convite = document.getElementById('convite')
+            convite.classList.add('mostrar')
+            convite.style.pointerEvents = 'auto'
+            this.removeEventListener('click', arguments.callee)
+          }, 500)
+        })
+
+      // Função para manipular os cliques na imagem do convite
+      document.getElementById('convite').addEventListener('click', event => {
+        // Obtém as coordenadas do clique em relação à imagem
+        const rect = event.target.getBoundingClientRect()
+        const x = event.clientX - rect.left // Coordenada X do clique
+        const y = event.clientY - rect.top // Coordenada Y do clique
+
+        // Calcula as coordenadas relativas (em porcentagem)
+        const relX = (x / rect.width) * 100 // Coordenada X em %
+        const relY = (y / rect.height) * 100 // Coordenada Y em %
+
+        console.log(`Clique em: (${relX.toFixed(2)}%, ${relY.toFixed(2)}%)`) // Debug
+
+        // Verifica se o clique está dentro de uma das áreas dos ícones
+        // Área 1: Lista de Presentes (círculo com centro em 102, 599)
+        if (
+          Math.sqrt(
+            (relX - (102 / rect.width) * 100) ** 2 +
+              (relY - (599 / rect.height) * 100) ** 2
+          ) <= 10
+        ) {
+          console.log('Clicou na Lista de Presentes') // Debug
+          const convite = document.getElementById('convite')
+          const listaPresentes = document.getElementById('lista-presentes')
+          convite.classList.remove('mostrar') // Esconde o convite
+          listaPresentes.classList.add('mostrar') // Mostra a lista de presentes
+        }
+        // Área 2: Confirmar Presença (círculo com centro em 196, 601)
+        else if (
+          Math.sqrt(
+            (relX - (196 / rect.width) * 100) ** 2 +
+              (relY - (601 / rect.height) * 100) ** 2
+          ) <= 10
+        ) {
+          console.log('Clicou em Confirmar Presença') // Debug
+          window.open(
+            'https://api.whatsapp.com/send?phone=5598981128923&text=Oi!%20Quero%20confirmar%20minha%20presen%C3%A7a%20no%20anivers%C3%A1rio%20da%20Isadora%20de%2015%20anos%20%F0%9F%8E%89',
+            '_blank'
+          ) // Abre o WhatsApp
+        }
+        // Área 3: Localização (círculo com centro em 289, 601)
+        else if (
+          Math.sqrt(
+            (relX - (289 / rect.width) * 100) ** 2 +
+              (relY - (601 / rect.height) * 100) ** 2
+          ) <= 10
+        ) {
+          console.log('Clicou na Localização') // Debug
+          window.open('https://maps.app.goo.gl/s6dJMsXZnWBsDqf18', '_blank') // Abre o Google Maps
+        }
+      })
+
+      // Função para manipular os cliques na imagem da lista de presentes
+      document
+        .getElementById('lista-presentes')
+        .addEventListener('click', event => {
+          // Obtém as coordenadas do clique em relação à imagem
+          const rect = event.target.getBoundingClientRect()
+          const x = event.clientX - rect.left // Coordenada X do clique
+          const y = event.clientY - rect.top // Coordenada Y do clique
+
+          // Calcula as coordenadas relativas (em porcentagem)
+          const relX = (x / rect.width) * 100 // Coordenada X em %
+          const relY = (y / rect.height) * 100 // Coordenada Y em %
+
+          console.log(`Clique em: (${relX.toFixed(2)}%, ${relY.toFixed(2)}%)`) // Debug
+
+          // Verifica se o clique está dentro da área do botão de voltar (círculo)
+          // Centro do botão de voltar: (50.26%, 77.49%)
+          if (
+            Math.sqrt((relX - 50.26) ** 2 + (relY - 77.49) ** 2) <= 10 // Raio de 10%
+          ) {
+            console.log('Clicou no Botão de Voltar') // Debug
+            const listaPresentes = document.getElementById('lista-presentes')
+            const convite = document.getElementById('convite')
+            listaPresentes.classList.remove('mostrar') // Esconde a lista de presentes
+            convite.classList.add('mostrar') // Mostra o convite
+          }
+        })
+    </script>
+  </body>
+</html>

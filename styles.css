@@ -1,0 +1,52 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+  margin: 0;
+  overflow: hidden;
+}
+
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.envelope,
+.convite {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.convite {
+  opacity: 0;
+  pointer-events: none; /* Impede clique enquanto invisível */
+  z-index: 0; /* Fica atrás do envelope */
+}
+
+.convite.mostrar {
+  opacity: 1;
+  pointer-events: auto; /* Permite clique quando visível */
+  z-index: 10; /* Coloca a imagem do convite acima */
+}
+
+/* A imagem mapeada precisa ficar acima da imagem */
+img[usemap] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Garante que as áreas clicáveis fiquem acima do convite */
+}
+
+/* Remover foco azul das áreas */
+area {
+  outline: none;
+}
